@@ -1,17 +1,43 @@
 %YAML 1.2
 ---
 name: YAML (Jinja)
+version: 2
 file_extensions:
+  - j2.yaml
+  - j2.yml
   # Salt states.
   - sls
 scope: source.yaml.jinja
 
-extends: Jinja.sublime-syntax
+extends: Packages/YAML/YAML.sublime-syntax
 
 contexts:
-  main:
-    # Override parent syntax.
-    - match: ''
-      push: Packages/YAML/YAML.sublime-syntax
-      with_prototype:
-        - include: base
+
+  flow-scalar-plain-in-body:
+    - meta_prepend: true
+    - include: jinja-interpolations
+
+  flow-scalar-plain-out-body:
+    - meta_prepend: true
+    - include: jinja-interpolations
+
+  flow-scalar-double-quoted-body:
+    - meta_prepend: true
+    - include: jinja-interpolations
+
+  flow-scalar-single-quoted-body:
+    - meta_prepend: true
+    - include: jinja-interpolations
+
+  block-scalar-body:
+    - meta_prepend: true
+    - include: jinja-blocks
+
+###[ JINJA ADAPTER ]#######################################################
+
+  jinja-interpolations:
+    - include: Jinja.sublime-syntax#expression_block
+
+  jinja-blocks:
+    - include: Jinja.sublime-syntax#expression_block
+    - include: Jinja.sublime-syntax#statement_block
