@@ -119,6 +119,7 @@ contexts:
 
   statement_block_body:
     - meta_include_prototype: false
+    - clear_scopes: 1  # remove `string` scope
     - meta_scope: meta.statement.jinja
     - match: (\s+\-(?!\%))|(\-\s+(?=\%))
       scope: invalid.illegal.jinja
@@ -133,6 +134,7 @@ contexts:
       push: expression_block_body
 
   expression_block_body:
+    - clear_scopes: 1  # remove `string` scope
     - meta_scope: meta.placeholder.jinja
     - match: \}{2}
       scope: punctuation.definition.placeholder.end.jinja
