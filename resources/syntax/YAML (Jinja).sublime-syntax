@@ -13,6 +13,14 @@ extends: Packages/YAML/YAML.sublime-syntax
 
 contexts:
 
+  flow-pair-key:
+    - meta_prepend: true
+    - include: jinja-custom-tags
+
+  block-key-implicit:
+    - meta_prepend: true
+    - include: jinja-custom-tags
+
   flow-scalar-plain-in-body:
     - meta_prepend: true
     - include: jinja-interpolations
@@ -41,3 +49,16 @@ contexts:
   jinja-blocks:
     - include: Jinja.sublime-syntax#expression_block
     - include: Jinja.sublime-syntax#statement_block
+
+  jinja-custom-tags:
+    - match: (when|until|changed_when|failed_when)\s*(:)\s*
+      captures:
+        1: meta.mapping.key.yaml meta.string.yaml string.unquoted.plain.out.yaml
+        2: meta.mapping.yaml punctuation.separator.key-value.yaml
+      set: jinja-implicit-block-body
+
+  jinja-implicit-block-body:
+    - meta_content_scope: meta.string.yaml meta.placeholder.jinja
+    - match: \s*$\n?
+      pop: true
+    - include: Jinja.sublime-syntax#expressions
