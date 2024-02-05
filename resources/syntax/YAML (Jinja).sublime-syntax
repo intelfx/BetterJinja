@@ -58,7 +58,7 @@ contexts:
       set: jinja-implicit-block-body
 
   jinja-implicit-block-body:
-    - meta_content_scope: meta.string.yaml meta.placeholder.jinja
+    - meta_content_scope: meta.string.yaml meta.interpolation.jinja
     - match: \s*$\n?
       pop: true
     - include: Jinja.sublime-syntax#expressions
